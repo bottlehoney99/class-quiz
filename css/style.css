@@ -148,7 +148,41 @@ a:hover { color: #152a4f; }
   transform: rotate(-8deg);
 }
 
+/* 문제 화면: 교사 화면과 학생 화면이 같은 모양을 쓴다 */
+.qnum { display: inline-flex; align-items: baseline; gap: 8px; font-size: 20px; }
+.qnum .num { font-size: 46px; }
+.q-total { font-size: 24px; color: var(--muted); margin-left: 4px; }
+.ring { position: relative; width: 70px; height: 70px; flex: none; }
+.ring svg { width: 70px; height: 70px; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: var(--line); stroke-width: 7; }
+.ring-fg { fill: none; stroke: var(--ink); stroke-width: 7; stroke-dasharray: 169.65; stroke-dashoffset: 0; transition: stroke-dashoffset .25s linear; }
+.ring.low .ring-fg { stroke: var(--red); }
+.ring .num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+.qbody { flex: 1; padding: 40px 48px 20px; display: flex; gap: 32px; align-items: flex-start; min-height: 0; }
+.qtext { margin: 0; flex: 1; font-size: clamp(40px, 4.6vw, 66px); font-weight: 700; line-height: 1.2; }
+.qimg { max-width: 38%; max-height: 34vh; object-fit: contain; border: 2px solid var(--ink); background: #fff; }
+.choices {
+  padding: 0 48px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+}
+.choice {
+  min-height: clamp(100px, 17vh, 150px);
+  padding: 12px 28px;
+  border: none;
+  border-radius: 6px;
+  background: var(--c); color: var(--on);
+  display: flex; align-items: center; gap: 22px;
+  font-family: var(--display);
+  font-size: clamp(30px, 3.2vw, 46px); font-weight: 700; line-height: 1.15;
+  text-align: left;
+}
+.choice .bubble { border: 3px solid var(--on); font-size: .85em; }
+
 @media (max-width: 720px) {
   .topbar { padding: 10px 16px; }
   .sheet::after { left: 16px; right: 16px; }
+}
+@media (max-width: 900px) {
+  .choices { grid-template-columns: 1fr; padding: 0 16px; }
+  .qbody { padding-left: 16px; padding-right: 16px; }
 }

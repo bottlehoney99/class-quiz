@@ -34,31 +34,16 @@
 .wait-msg { margin: 0; font-size: 32px; font-weight: 700; color: var(--muted); }
 .wait .small { margin: 0; }
 
-/* 문제 */
-.char.mini { width: 46px; height: 46px; display: inline-block; }
-#q-name { font-size: 26px; }
-.clock { font-size: 34px; font-weight: 700; min-width: 2.4em; text-align: right; }
-.clock.low { color: var(--red); }
-.qmain { flex: 1; padding: 36px 40px 48px; display: flex; gap: 44px; }
-.qleft { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
-.qtag { align-self: flex-start; font-family: var(--body); font-size: 15px; font-weight: 700; color: var(--red); border: 1.5px solid var(--red); padding: 3px 10px; }
-.qtext { margin: 0; font-size: clamp(32px, 3.6vw, 50px); font-weight: 700; line-height: 1.25; }
-.qimg { max-width: 100%; max-height: 32vh; object-fit: contain; align-self: flex-start; border: 2px solid var(--ink); background: #fff; }
-.qhint { margin-top: auto !important; }
-.qright { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-.opt {
-  flex: 1; min-height: 82px; max-height: 128px;
-  padding: 10px 22px; display: flex; align-items: center; gap: 18px;
-  background: var(--sheet); border: 2px solid var(--ink); border-radius: 4px;
-  font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; text-align: left; line-height: 1.15;
-  transition: transform .08s;
-}
-.opt .bubble { background: var(--c); color: var(--on); font-size: .78em; }
-.opt:hover:not(:disabled) { background: #fff; transform: translateX(4px); }
-.opt:disabled { opacity: 1; }
-.locked .opt { opacity: .38; }
-.locked .opt.mine { opacity: 1; background: var(--ink); color: var(--paper); }
-.qright .sent { margin: 2px 0 0; font-size: 26px; font-weight: 700; }
+/* 문제: 배치와 색은 교사 화면과 같다 (style.css의 .qbody, .choices, .choice) */
+.me { display: inline-flex; align-items: center; gap: 10px; }
+.char.mini { width: 44px; height: 44px; display: inline-block; }
+#q-name { font-size: 24px; }
+.choice { cursor: pointer; transition: transform .08s, opacity .2s; }
+.choice:hover:not(:disabled) { transform: translateY(-3px); }
+.choice:disabled { cursor: default; opacity: 1; }
+.locked .choice { opacity: .3; }
+.locked .choice.mine { opacity: 1; outline: 5px solid var(--ink); outline-offset: 4px; }
+.qhint { margin: 0; padding: 14px 48px 30px; text-align: right; font-size: 17px; }
 
 /* 정답 확인 */
 .res { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 24px 16px 60px; text-align: center; }
@@ -83,8 +68,7 @@
 .f-top .sc { margin-left: auto; font-size: 22px; color: var(--muted); }
 
 @media (max-width: 760px) {
-  .qmain { flex-direction: column; padding: 20px 16px 48px; gap: 20px; }
+  .qhint { padding: 14px 16px 30px; }
   .char-grid { padding: 20px 16px 56px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .char-grid .char { width: 72px; height: 72px; }
-  .opt { min-height: 72px; }
 }

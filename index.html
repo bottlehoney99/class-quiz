@@ -44,19 +44,24 @@
 <!-- 문제 -->
 <section class="sheet" id="s-q" hidden>
   <header class="topbar">
-    <div class="left"><span class="char mini" id="q-char"></span><b id="q-name"></b><span class="small num" id="q-score"></span></div>
-    <div class="right"><span class="small">문항 <b class="num" id="q-no"></b> / <span id="q-total"></span></span><span class="clock num" id="q-clock"></span></div>
+    <div class="left">
+      <span class="qnum"><span class="label-red">문항</span> <b class="num" id="q-no">01</b><span class="q-total" id="q-total">/ 08</span></span>
+      <span class="small qtitle"></span>
+    </div>
+    <div class="right">
+      <span class="me"><span class="char mini" id="q-char"></span><b id="q-name"></b><span class="small num" id="q-score"></span></span>
+      <div class="ring" aria-label="남은 시간">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" class="ring-bg"/><circle cx="32" cy="32" r="27" class="ring-fg" id="q-ring"/></svg>
+        <span class="num" id="q-clock">20</span>
+      </div>
+    </div>
   </header>
-  <div class="timebar" aria-hidden="true"><div id="q-bar"></div></div>
-  <main class="qmain">
-    <section class="qleft">
-      <span class="qtag" id="q-tag"></span>
-      <p class="qtext" id="q-text"></p>
-      <img class="qimg" id="q-img" alt="문제 그림" hidden>
-      <p class="small qhint" id="q-hint">답을 누르면 바로 제출되고, 바꿀 수 없어요.</p>
-    </section>
-    <section class="qright" id="q-choices" aria-label="선택지"></section>
-  </main>
+  <div class="qbody">
+    <p class="qtext" id="q-text"></p>
+    <img class="qimg" id="q-img" alt="문제 그림" hidden>
+  </div>
+  <div class="choices" id="q-choices" role="group" aria-label="선택지"></div>
+  <p class="qhint small" id="q-hint" role="status">답을 누르면 바로 제출되고, 바꿀 수 없어요.</p>
 </section>
 
 <!-- 정답 확인 -->

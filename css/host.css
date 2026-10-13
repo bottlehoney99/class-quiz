@@ -73,34 +73,9 @@ code { font-family: var(--body); background: var(--line); padding: 1px 5px; bord
 .player-grid li { animation: pop .35s ease-out; }
 @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* 문제 */
-.qnum { display: inline-flex; align-items: baseline; gap: 8px; font-size: 20px; }
-.qnum .num { font-size: 46px; }
-.q-total { font-size: 24px; color: var(--muted); margin-left: 4px; }
+/* 문제 화면 모양은 style.css에 있다(학생 화면과 같이 씀) */
 .answered { display: inline-flex; align-items: baseline; gap: 8px; }
 .answered .num { font-size: 34px; }
-.ring { position: relative; width: 70px; height: 70px; }
-.ring svg { width: 70px; height: 70px; transform: rotate(-90deg); }
-.ring-bg { fill: none; stroke: var(--line); stroke-width: 7; }
-.ring-fg { fill: none; stroke: var(--ink); stroke-width: 7; stroke-dasharray: 169.65; stroke-dashoffset: 0; transition: stroke-dashoffset .25s linear; }
-.ring.low .ring-fg { stroke: var(--red); }
-.ring .num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-.qbody { flex: 1; padding: 40px 48px 20px; display: flex; gap: 32px; align-items: flex-start; min-height: 0; }
-.qtext { margin: 0; flex: 1; font-size: clamp(40px, 4.6vw, 66px); font-weight: 700; line-height: 1.2; }
-.qimg { max-width: 38%; max-height: 34vh; object-fit: contain; border: 2px solid var(--ink); background: #fff; }
-.choices {
-  padding: 0 48px;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
-}
-.choice {
-  min-height: clamp(100px, 17vh, 150px);
-  padding: 12px 28px;
-  border-radius: 6px;
-  background: var(--c); color: var(--on);
-  display: flex; align-items: center; gap: 22px;
-  font-size: clamp(30px, 3.2vw, 46px); font-weight: 700; line-height: 1.15;
-}
-.choice .bubble { border: 3px solid var(--on); font-size: .85em; }
 .controls { padding: 14px 48px 30px; display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 
 /* 정답 공개 */
@@ -185,8 +160,7 @@ code { font-family: var(--body); background: var(--line); padding: 1px 5px; bord
 
 @media (max-width: 900px) {
   .setup, .lobby, .results { grid-template-columns: 1fr; gap: 32px; padding: 24px 16px 48px; }
-  .choices { grid-template-columns: 1fr; padding: 0 16px; }
-  .qbody, .reveal, .leader { padding-left: 16px; padding-right: 16px; }
+  .reveal, .leader { padding-left: 16px; padding-right: 16px; }
   .controls { padding: 14px 16px 30px; }
   .bars li { grid-template-columns: minmax(120px, 40%) minmax(0, 1fr) 50px; }
   .podium { margin-left: 16px; margin-right: 16px; padding: 0; }

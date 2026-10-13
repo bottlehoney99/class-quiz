@@ -170,9 +170,8 @@
     $('#q-char').innerHTML = RQ.charSVG(m.me.char);
     $('#q-name').textContent = m.me.name;
     $('#q-score').textContent = RQ.fmt(m.me.score) + '점';
-    $('#q-no').textContent = m.qi + 1;
-    $('#q-total').textContent = m.total;
-    $('#q-tag').textContent = '문항 ' + (m.qi + 1);
+    $('#q-no').textContent = pad2(m.qi + 1);
+    $('#q-total').textContent = '/ ' + pad2(m.total);
     $('#q-text').textContent = m.q.text;
     const img = $('#q-img');
     const src = RQ.imgSrc(m.q.image);
@@ -181,8 +180,10 @@
     $('#q-hint').textContent = '답을 누르면 바로 제출되고, 바꿀 수 없어요.';
     const box = $('#q-choices');
     box.classList.remove('locked');
-    box.innerHTML = m.q.choices.map((c) => `<button type="button" class="opt c${c.n + 1}" data-n="${c.n}"><span class="bubble">${c.n + 1}</span><span>${esc(c.text)}</span></button>`).join('');
-    $$('.opt', box).forEach((b) => b.addEventListener('click', () => pickAnswer(Number(b.dataset.n))));
+    // 교사 화면과 같은 순서·색·번호
+    const list = m.q.choices.slice().sort((a, b) => a.n - b.n);
+    box.innerHTML = list.map((c) => `<button type="button" class="choice c${c.n + 1}" data-n="${c.n}"><span class="bubble">${c.n + 1}</span><span>${esc(c.text)}</span></button>`).join('');
+    $$('.choice', box).forEach((b) => b.addEventListener('click', () => pickAnswer(Number(b.dataset.n))));
     clearInterval(clockT);
     clockT = setInterval(tickClock, 200);
     tickClock();
@@ -190,13 +191,13 @@
   function tickClock() {
     const remain = qRemain - (performance.now() - qRecvAt);
     const sec = Math.max(0, Math.ceil(remain / 1000));
-    $('#q-clock').textContent = sec + '초';
-    $('#q-clock').classList.toggle('low', sec <= 5);
+    $('#q-clock').textContent = sec;
+    $('#s-q .ring').classList.toggle('low', sec <= 5);
     const frac = Math.max(0, Math.min(1, remain / (cur.limitMs || 1)));
-    $('#q-bar').style.transform = `scaleX(${frac})`;
+    $('#q-ring').style.strokeDashoffset = String(169.65 * (1 - frac));
     if (remain <= 0) {
       clearInterval(clockT);
-      if (myPick < 0) { $('#q-choices').classList.add('locked'); $$('.opt').forEach((b) => { b.disabled = true; }); $('#q-hint').textContent = '시간이 끝났어요.'; }
+      if (myPick < 0) { $('#q-choices').classList.add('locked'); $$('#q-choices .choice').forEach((b) => { b.disabled = true; }); $('#q-hint').textContent = '시간이 끝났어요.'; }
     }
   }
   function pickAnswer(n) {
@@ -209,7 +210,7 @@
     myPick = n;
     const box = $('#q-choices');
     box.classList.add('locked');
-    $$('.opt', box).forEach((b) => { b.disabled = true; b.classList.toggle('mine', Number(b.dataset.n) === n); });
+    $$('.choice', box).forEach((b) => { b.disabled = true; b.classList.toggle('mine', Number(b.dataset.n) === n); });
     $('#q-hint').textContent = '제출했어요. 다른 친구들을 기다리는 중…';
   }
 

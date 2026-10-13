@@ -120,7 +120,6 @@
       quiz,
       settings: {
         className: RQ.nfc($('#class-name').value.trim()),
-        shuffle: $('#opt-shuffle').checked,
         leader: $('#opt-leader').checked,
       },
       date: RQ.today(),
@@ -285,7 +284,7 @@
     if (!p.perms[qi]) {
       const n = S.quiz.questions[qi].choices.length;
       const a = Array.from({ length: n }, (_, i) => i);
-      if (S.settings.shuffle && n > 2) for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      // 학생 화면도 교사 화면과 같은 순서로 보여 준다
       p.perms[qi] = a;
     }
     return p.perms[qi];
