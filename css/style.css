@@ -1,0 +1,154 @@
+@charset "UTF-8";
+@import url("../vendor/fonts/fonts.css");
+
+:root {
+  --paper: #F5F0E1;
+  --sheet: #FFFDF7;
+  --ink: #1C1B19;
+  --muted: #5E584D;
+  --faint: #8A8274;
+  --line: #E2D8C1;
+  --red: #C8473D;
+  --navy: #22427A;
+  --mustard: #E3AC2E;
+  --green: #2E6E48;
+  --c1: var(--red);
+  --c2: var(--navy);
+  --c3: var(--mustard);
+  --c4: var(--green);
+  --display: 'Gaegu', 'Gowun Dodum', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --body: 'Gowun Dodum', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--display);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .45; }
+a { color: var(--navy); }
+a:hover { color: #152a4f; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+/* 공통 틀 */
+.sheet {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 40px;
+}
+.sheet::after {
+  /* OMR 타이밍 마크 */
+  content: "";
+  position: absolute;
+  left: 48px; right: 48px; bottom: 14px;
+  height: 12px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 16px, transparent 16px 32px);
+  pointer-events: none;
+}
+.topbar {
+  min-height: 76px;
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 2px solid var(--red);
+  flex-wrap: wrap;
+}
+.topbar .left, .topbar .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.small { font-family: var(--body); font-size: 16px; color: var(--muted); }
+.label-red { color: var(--red); font-weight: 700; }
+.topbar > .left > .label-red { font-size: 28px; }
+.num { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.btn {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 4px;
+  border: 2px solid var(--ink);
+  background: var(--sheet);
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.btn:hover:not(:disabled) { background: #fff; }
+.btn.dark { background: var(--ink); color: var(--paper); }
+.btn.dark:hover:not(:disabled) { background: #000; }
+.btn.red { background: var(--red); border-color: var(--red); color: #fff; }
+.btn.ghost { border-color: transparent; background: transparent; text-decoration: underline; text-underline-offset: 4px; }
+.btn.big { min-height: 64px; font-size: 30px; padding: 0 34px; }
+.btn.sm { min-height: 40px; font-size: 18px; padding: 0 14px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--body); font-size: 15px; color: var(--muted); }
+.input {
+  height: 56px;
+  padding: 0 16px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--sheet);
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+}
+.input::placeholder { color: #A39B8C; font-weight: 400; }
+
+.check { display: flex; align-items: center; gap: 10px; font-family: var(--body); font-size: 17px; }
+.check input { width: 22px; height: 22px; accent-color: var(--ink); }
+
+.bubble {
+  width: 1.9em; height: 1.9em;
+  flex: none;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.c1 { --c: var(--c1); --on: #fff; }
+.c2 { --c: var(--c2); --on: #fff; }
+.c3 { --c: var(--c3); --on: var(--ink); }
+.c4 { --c: var(--c4); --on: #fff; }
+
+.timebar { height: 8px; background: var(--line); }
+.timebar > div { height: 100%; width: 100%; background: var(--ink); transform-origin: left; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 48px; transform: translateX(-50%);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--body); font-size: 17px;
+  padding: 12px 20px; border-radius: 4px; z-index: 50;
+  max-width: calc(100vw - 32px);
+}
+
+.char svg { display: block; width: 100%; height: 100%; }
+
+/* 빨간 채점 동그라미 */
+.stamp-o {
+  position: absolute;
+  border: 5px solid var(--red);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+
+@media (max-width: 720px) {
+  .topbar { padding: 10px 16px; }
+  .sheet::after { left: 16px; right: 16px; }
+}

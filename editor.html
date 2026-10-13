@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>복습 퀴즈 · 퀴즈 만들기</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23C8473D' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/editor.css">
+</head>
+<body class="editor">
+<section class="sheet">
+  <header class="topbar">
+    <div class="left">
+      <span class="brand-ed">퀴즈 만들기</span>
+      <a class="btn sm ghost" href="host.html">교사 화면으로</a>
+    </div>
+    <div class="right">
+      <label class="btn sm" for="file-in">CSV 불러오기</label>
+      <input type="file" id="file-in" accept=".csv,text/csv" hidden>
+      <button class="btn sm" id="btn-preview" type="button">학생 화면 미리보기</button>
+      <button class="btn sm" id="btn-save" type="button">CSV로 저장</button>
+      <button class="btn sm dark" id="btn-play" type="button">이 퀴즈로 시작</button>
+    </div>
+  </header>
+
+  <div class="ed">
+    <label class="sr" for="quiz-title">퀴즈 제목</label>
+    <input class="title-in" id="quiz-title" maxlength="40" placeholder="퀴즈 제목 (예: 3단원 식물의 광합성)">
+    <ol class="qs" id="qs"></ol>
+    <div class="ed-actions">
+      <button class="btn" id="btn-add" type="button">문제 추가</button>
+      <button class="btn" id="btn-add-ox" type="button">O/X 문제 추가</button>
+      <button class="btn ghost" id="btn-paste-open" type="button">메모장 글 붙여넣어 한꺼번에 추가</button>
+      <button class="btn ghost" id="btn-clear" type="button">모두 지우기</button>
+    </div>
+
+    <div class="paste" id="paste" hidden>
+      <div class="paste-help">
+        <p><b>쓰는 법</b> 문제 하나는 빈 줄로 나눕니다. 첫 줄이 문제, 다음 줄부터 선택지(2~4개)이고 정답 앞에 <code>*</code>를 붙입니다. <code>해설:</code>, <code>시간:</code> 줄은 넣어도 되고 빼도 됩니다.</p>
+<pre>광합성이 주로 일어나는 세포 소기관은?
+미토콘드리아
+*엽록체
+핵
+리보솜
+해설: 엽록체 안의 엽록소가 빛을 흡수합니다.
+시간: 20
+
+식물은 광합성으로 산소를 만든다.
+*O
+X</pre>
+      </div>
+      <label class="sr" for="paste-in">붙여넣을 글</label>
+      <textarea id="paste-in" rows="12" placeholder="여기에 붙여넣으세요"></textarea>
+      <p class="err" id="paste-err"></p>
+      <div class="row"><button class="btn dark" id="btn-paste" type="button">문제로 바꾸기</button><button class="btn ghost" id="btn-paste-close" type="button">닫기</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="preview" id="preview" hidden role="dialog" aria-modal="true" aria-label="학생 화면 미리보기">
+  <div class="pv-frame">
+    <header class="topbar">
+      <div class="left"><span class="small">미리보기 · 문항 <b class="num" id="pv-no"></b> / <span id="pv-total"></span></span></div>
+      <div class="right">
+        <button class="btn sm" id="pv-prev" type="button">이전</button>
+        <button class="btn sm" id="pv-next" type="button">다음</button>
+        <button class="btn sm dark" id="pv-close" type="button">닫기</button>
+      </div>
+    </header>
+    <div class="timebar" aria-hidden="true"><div style="transform:scaleX(.7)"></div></div>
+    <main class="pv-main">
+      <section class="pv-left"><p class="pv-text" id="pv-text"></p><img id="pv-img" class="pv-img" alt="문제 그림" hidden></section>
+      <section class="pv-right" id="pv-choices"></section>
+    </main>
+  </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>복습 퀴즈</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23C8473D' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/student.css">
+</head>
+<body class="student">
+
+<div class="netbar" id="netbar" role="status" hidden>연결이 끊겼어요. 다시 잇는 중…</div>
+
+<!-- 입장 -->
+<section class="sheet" id="s-join" hidden>
+  <header class="topbar"><div class="left"><span class="brand">복습 퀴즈</span></div><div class="right"><a class="small" href="host.html">교사 화면</a></div></header>
+  <form class="join" id="join-form" novalidate>
+    <h1 class="h1">들어가기</h1>
+    <div class="field"><label for="in-room">방 번호</label><input class="input" id="in-room" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="6자리 숫자"></div>
+    <div class="field"><label for="in-name">이름</label><input class="input" id="in-name" autocomplete="off" maxlength="12" placeholder="선생님이 알아볼 수 있게"></div>
+    <p class="err" id="join-err" role="alert"></p>
+    <button class="btn dark big" type="submit" id="btn-join">다음</button>
+  </form>
+</section>
+
+<!-- 캐릭터 고르기 -->
+<section class="sheet" id="s-char" hidden>
+  <header class="topbar"><div class="left"><span class="brand">캐릭터 고르기</span><span class="small" id="char-who"></span></div><div class="right"><button class="btn sm ghost" type="button" id="btn-random">아무거나</button></div></header>
+  <ul class="char-grid" id="char-grid" aria-label="캐릭터"></ul>
+</section>
+
+<!-- 기다리기 -->
+<section class="sheet" id="s-wait" hidden>
+  <header class="topbar"><div class="left"><span class="small qtitle"></span></div><div class="right"><span class="small" id="wait-score"></span></div></header>
+  <div class="wait">
+    <div class="char big-char" id="wait-char"></div>
+    <p class="wait-name" id="wait-name"></p>
+    <p class="wait-msg" id="wait-msg"></p>
+    <p class="small" id="wait-sub"></p>
+  </div>
+</section>
+
+<!-- 문제 -->
+<section class="sheet" id="s-q" hidden>
+  <header class="topbar">
+    <div class="left"><span class="char mini" id="q-char"></span><b id="q-name"></b><span class="small num" id="q-score"></span></div>
+    <div class="right"><span class="small">문항 <b class="num" id="q-no"></b> / <span id="q-total"></span></span><span class="clock num" id="q-clock"></span></div>
+  </header>
+  <div class="timebar" aria-hidden="true"><div id="q-bar"></div></div>
+  <main class="qmain">
+    <section class="qleft">
+      <span class="qtag" id="q-tag"></span>
+      <p class="qtext" id="q-text"></p>
+      <img class="qimg" id="q-img" alt="문제 그림" hidden>
+      <p class="small qhint" id="q-hint">답을 누르면 바로 제출되고, 바꿀 수 없어요.</p>
+    </section>
+    <section class="qright" id="q-choices" aria-label="선택지"></section>
+  </main>
+</section>
+
+<!-- 정답 확인 -->
+<section class="sheet" id="s-res" hidden>
+  <header class="topbar"><div class="left"><span class="small">문항 <b class="num" id="r-no"></b></span></div><div class="right"><span class="small" id="r-rank"></span></div></header>
+  <div class="res">
+    <div class="verdict" id="r-verdict"></div>
+    <p class="gain num" id="r-gain"></p>
+    <p class="answer-line" id="r-answer"></p>
+    <p class="explain" id="r-explain"></p>
+    <p class="small" id="r-total"></p>
+  </div>
+</section>
+
+<!-- 끝 -->
+<section class="sheet" id="s-final" hidden>
+  <header class="topbar"><div class="left"><span class="label-red">최종 결과</span><span class="small qtitle"></span></div></header>
+  <div class="final">
+    <div class="me">
+      <div class="char big-char" id="f-char"></div>
+      <p class="f-rank" id="f-rank"></p>
+      <p class="f-score num" id="f-score"></p>
+    </div>
+    <ol class="f-top" id="f-top" aria-label="1, 2, 3등"></ol>
+  </div>
+</section>
+
+<!-- 안내 -->
+<section class="sheet" id="s-msg" hidden>
+  <header class="topbar"><div class="left"><span class="brand">복습 퀴즈</span></div></header>
+  <div class="wait"><p class="wait-msg" id="msg-text"></p><button class="btn" type="button" id="btn-again">처음으로</button></div>
+</section>
+
+<script src="vendor/peerjs.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/student.js"></script>
+</body>
+</html>
