@@ -162,7 +162,7 @@
       if (S.phase === 'lobby') enterLobby();
       else if (S.phase === 'question') { renderQuestion(); show('s-question'); startTick(); }
       else if (S.phase === 'reveal') { renderReveal(); show('s-reveal'); }
-      else if (S.phase === 'leader') { renderLeader(); show('s-leader'); }
+      else if (S.phase === 'leader') { renderLeader(); show('s-leader'); Sound.music('lobby'); }
       else if (S.phase === 'podium') podium();
       RQ.toast('학생들 화면이 자동으로 다시 연결됩니다.');
     };
@@ -215,6 +215,7 @@
     const taken = new Set(players().map((p) => p.name));
     while (taken.has(name)) name = `${chk.name}(${k++})`;
     S.players[cid] = { cid, name, baseName: chk.name, char, score: 0, connected: true, lastSeen: now(), answers: {}, perms: {} };
+    if (S.phase === 'lobby') Sound.sfx('join');
     afterJoin(cid);
   }
   function afterJoin(cid) {
@@ -343,6 +344,8 @@
     renderPlayers();
     show('s-lobby');
     persist();
+    Sound.preload();
+    Sound.music('lobby');
   }
   function renderPlayers() {
     if (!S) return;
@@ -404,7 +407,25 @@
     const frac = Math.max(0, Math.min(1, remain / S.limitMs));
     $('#ring-fg').style.strokeDashoffset = String(169.65 * (1 - frac));
     $('.ring').classList.toggle('low', sec <= 5);
+    questionSound(remain, frac);
     return remain;
+  }
+  // 문제 배경음: 남은 시간에 따라 1→2→3단계, 마지막 5초에 째깍 소리
+  let timeupFor = '';
+  let ducked = false;
+  function questionSound(remain, frac) {
+    if (!S || S.phase !== 'question') return;
+    Sound.music(frac > 0.5 ? 'q1' : frac > 0.2 ? 'q2' : 'q3', 900);
+    const key = S.qi + ':' + S.limitMs;   // 시간을 연장하면 다시 울린다
+    if (remain > 0 && remain <= 5000 && timeupFor !== key) {
+      timeupFor = key;
+      ducked = true;
+      Sound.duck(true);
+      Sound.sfx('timeup');
+    } else if (remain > 5000 && ducked) {
+      ducked = false;
+      Sound.duck(false);
+    }
   }
   function startTick() {
     clearInterval(tickT);
@@ -439,6 +460,8 @@
     clearInterval(tickT);
     clearTimeout(autoRevealT);
     S.phase = 'reveal';
+    Sound.stopMusic(300);
+    Sound.sfx('reveal');
     renderReveal();
     show('s-reveal');
     broadcast();
@@ -476,6 +499,7 @@
   /* ---------- 5. 중간 순위 ---------- */
   function leader() {
     S.phase = 'leader';
+    Sound.music('lobby');
     renderLeader();
     show('s-leader');
     broadcast();
@@ -498,6 +522,7 @@
     clearInterval(tickT);
     podiumT.forEach(clearTimeout); podiumT = [];
     S.phase = 'podium';
+    Sound.stopMusic(400);
     const r = ranked();
     const asked = S.qi + 1 - S.skipped.filter((i) => i <= S.qi).length;
     $('#p-sub').textContent = `${S.quiz.title} · 참여 ${r.length}명 · ${asked}문항`;
@@ -516,9 +541,9 @@
     persist();
     saveFiles();
     const showStep = (p) => { const el = $(`#podium .p${p}`); if (el) el.classList.add('show'); };
-    podiumT.push(setTimeout(() => showStep(3), 700));
-    podiumT.push(setTimeout(() => showStep(2), 3200));
-    podiumT.push(setTimeout(() => { showStep(1); confetti(); }, 5900));
+    podiumT.push(setTimeout(() => { showStep(3); if (r[2]) Sound.sfx('step'); }, 700));
+    podiumT.push(setTimeout(() => { showStep(2); if (r[1]) Sound.sfx('step'); }, 3200));
+    podiumT.push(setTimeout(() => { showStep(1); confetti(); Sound.sfx('fanfare'); }, 5900));
     podiumT.push(setTimeout(() => { $('#btn-results').hidden = false; }, 7600));
   }
   function confetti() {
@@ -536,6 +561,7 @@
   /* ---------- 7. 결과 ---------- */
   function results() {
     S.phase = 'results';
+    Sound.stopMusic(800);
     renderResults();
     show('s-results');
     broadcast();
