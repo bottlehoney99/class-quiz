@@ -93,6 +93,15 @@
     $('#btn-open').disabled = false;
   }
 
+  // 빈 양식: 첫 줄(열 이름)과 예시 두 줄
+  $('#btn-template').addEventListener('click', () => {
+    const rows = [RQ.QUIZ_HEADER,
+      [1, '광합성이 주로 일어나는 세포 소기관은?', '미토콘드리아', '엽록체', '핵', '리보솜', 2, 20, '엽록체 속 엽록소가 빛에너지를 흡수한다.', ''],
+      [2, '식물은 광합성을 할 때 산소를 내보낸다.', 'O', 'X', '', '', 1, 10, '', ''],
+    ];
+    RQ.download('퀴즈_양식.csv', RQ.toCSV(rows));
+  });
+
   $('#file-quiz').addEventListener('change', async (e) => {
     const f = e.target.files[0];
     if (!f) return;

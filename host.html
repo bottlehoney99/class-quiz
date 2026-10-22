@@ -29,8 +29,9 @@
       <div class="row">
         <label class="btn" for="file-quiz">내 컴퓨터의 CSV 불러오기</label>
         <input type="file" id="file-quiz" accept=".csv,text/csv" hidden>
+        <button class="btn" type="button" id="btn-template">CSV 양식 내려받기</button>
       </div>
-      <p class="small">CSV 첫 줄은 <code>번호, 문제, 선택지1~4, 정답, 제한시간, 해설, 그림</code> 순서입니다. 엑셀에서 저장한 파일도 그대로 읽습니다.</p>
+      <p class="small">양식을 받아 엑셀에서 예시 두 줄을 지우고 문제를 채운 뒤, 그대로 저장해서 불러오면 됩니다. 정답은 선택지 번호(1~4)로, 제한시간은 초로 적고, O/X 문제는 선택지1에 O, 선택지2에 X를 적습니다.</p>
     </div>
     <div class="setup-col">
       <h2 class="h2">고른 퀴즈</h2>
