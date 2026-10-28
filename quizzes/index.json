@@ -1,16 +1,13 @@
 {
   "quizzes": [
     {
-      "title": "[예시] 식물의 광합성",
-      "file": "sample-photosynthesis.csv"
-    },
-    {
-      "title": "2-3 알고리즘 설계",
-      "file": "2-3_알고리즘설계.csv"
-    },    
-    {
       "title": "2-2_문제분해와모델링",
       "file": "2-2_문제분해와모델링.csv"
+    },
+    {
+      "title": "2-3_알고리즘 설계",
+      "file": "2-3_알고리즘설계.csv"
     }
+    
   ]
 }
