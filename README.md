@@ -97,7 +97,7 @@
 
 ## 캐릭터
 
-학생이 입장할 때 고르는 캐릭터는 21종이고, 그림은 `characters/` 폴더에 있습니다(256×256 WebP, 배경 투명). 캐릭터를 더 넣으려면 같은 크기의 그림을 `characters/영문이름.webp`로 올리고, `js/common.js`의 `RQ.CHARS` 목록에 `{ id: '영문이름', name: '보일 이름' },` 한 줄을 추가합니다. 공개 저장소이므로 기존 만화·게임 캐릭터처럼 남의 그림은 올리지 마세요.
+학생이 입장할 때 고르는 캐릭터는 40종이고, 그림은 `characters/` 폴더에 있습니다(256×256 WebP, 배경 투명). 캐릭터를 더 넣으려면 같은 크기의 그림을 `characters/영문이름.webp`로 올리고, `js/common.js`의 `RQ.CHARS` 목록에 `{ id: '영문이름', name: '보일 이름' },` 한 줄을 추가합니다. 공개 저장소이므로 기존 만화·게임 캐릭터처럼 남의 그림은 올리지 마세요.
 
 ## 연결 방식과 주의할 점
 
@@ -116,7 +116,7 @@ index.html, host.html, editor.html
 css/      화면 모양
 js/       common.js(공통), host.js, student.js, editor.js
 quizzes/  퀴즈 CSV, index.json, images/
-characters/ 학생 캐릭터 그림 21종
+characters/ 학생 캐릭터 그림 40종
 sounds/   배경음·효과음(CC0)과 출처
 vendor/   PeerJS, QR코드 라이브러리, 개구·고운돋움 글꼴(SIL OFL)
 ```
