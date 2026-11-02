@@ -208,11 +208,15 @@ RQ.CHARS = [
   { id: 'polarbear', name: '북극곰' },
   { id: 'sun', name: '해님' },
 ];
-RQ.charById = (id) => RQ.CHARS.find((c) => c.id === id) || RQ.CHARS[0];
+// 목록에 없는 이름이라도 형식만 맞으면 그대로 쓴다.
+// (교사 화면과 학생 화면의 코드 버전이 달라도 학생이 고른 캐릭터가 바뀌지 않게)
+RQ.validCharId = (id) => typeof id === 'string' && /^[a-z0-9_-]{1,24}$/.test(id);
+RQ.charById = (id) => RQ.CHARS.find((c) => c.id === id) || (RQ.validCharId(id) ? { id, name: '캐릭터' } : RQ.CHARS[0]);
 RQ.charSVG = (id, label = true) => {
   const c = RQ.charById(id);
   const alt = label ? `${RQ.esc(c.name)} 캐릭터` : '';
-  return `<img src="characters/${c.id}.webp" alt="${alt}" width="256" height="256" draggable="false" decoding="async"${label ? '' : ' aria-hidden="true"'}>`;
+  const fallback = `characters/${RQ.CHARS[0].id}.webp`;
+  return `<img src="characters/${c.id}.webp" alt="${alt}" width="256" height="256" draggable="false" decoding="async" onerror="this.onerror=null;this.src='${fallback}'"${label ? '' : ' aria-hidden="true"'}>`;
 };
 
 /* ---------- 통신 ----------

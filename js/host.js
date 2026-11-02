@@ -208,7 +208,7 @@
     if (['podium', 'results'].includes(S.phase)) { link.send(cid, { t: 'rejected', reason: '퀴즈가 이미 끝났어요.' }); return; }
     const chk = RQ.checkName(m.name);
     if (!chk.ok) { link.send(cid, { t: 'rejected', reason: chk.msg }); return; }
-    const char = RQ.CHARS.some((c) => c.id === m.char) ? m.char : RQ.CHARS[Math.floor(Math.random() * RQ.CHARS.length)].id;
+    const char = RQ.validCharId(m.char) ? m.char : RQ.CHARS[Math.floor(Math.random() * RQ.CHARS.length)].id;
     if (S.players[cid]) { S.players[cid].char = char; sendState(cid); renderPlayers(); persist(); return; }
 
     // 같은 이름으로 다시 들어오면 원래 점수를 이어 준다
