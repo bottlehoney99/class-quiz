@@ -99,6 +99,8 @@ RQ.quizFromRows = (rows, title) => {
     const text = get(col.text);
     const choices = [get(col.c1), get(col.c2), get(col.c3), get(col.c4)];
     while (choices.length > 2 && !choices[choices.length - 1]) choices.pop();
+    // 번호만 적혀 있고 나머지가 빈 줄(엑셀에서 미리 번호를 매겨 둔 줄)은 조용히 건너뛴다
+    if (!text && !choices.some((c) => c) && !get(col.ans) && !get(col.exp)) return;
     if (!text) { errors.push(`${line}번째 줄: 문제가 비어 있습니다.`); return; }
     if (choices.some((c) => !c)) { errors.push(`${line}번째 줄: 비어 있는 선택지가 중간에 있습니다.`); return; }
     const ansRaw = get(col.ans).replace(/[^0-9OoXx○×]/g, '');
