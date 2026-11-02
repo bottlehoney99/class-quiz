@@ -95,6 +95,10 @@
 
 음원은 `sounds/` 폴더에 있고 모두 CC0(저작권 포기) 음원입니다. 곡 이름과 만든 사람은 `sounds/CREDITS.md`에 있습니다. 파일이 없으면 브라우저가 직접 만든 소리(코드로 만든 음이라 저작권 문제가 없음)로 대신 냅니다.
 
+## 캐릭터
+
+학생이 입장할 때 고르는 캐릭터는 21종이고, 그림은 `characters/` 폴더에 있습니다(256×256 WebP, 배경 투명). 캐릭터를 더 넣으려면 같은 크기의 그림을 `characters/영문이름.webp`로 올리고, `js/common.js`의 `RQ.CHARS` 목록에 `{ id: '영문이름', name: '보일 이름' },` 한 줄을 추가합니다. 공개 저장소이므로 기존 만화·게임 캐릭터처럼 남의 그림은 올리지 마세요.
+
 ## 연결 방식과 주의할 점
 
 교사 브라우저 탭이 방 역할을 하고, 학생 브라우저는 WebRTC로 교사 탭에 직접 연결됩니다(PeerJS 사용). 처음 연결을 이어 줄 때만 PeerJS의 무료 중계 서버(`0.peerjs.com`)를 거치고, 이름이나 답은 그 서버에 남지 않습니다.
@@ -112,6 +116,7 @@ index.html, host.html, editor.html
 css/      화면 모양
 js/       common.js(공통), host.js, student.js, editor.js
 quizzes/  퀴즈 CSV, index.json, images/
+characters/ 학생 캐릭터 그림 21종
 sounds/   배경음·효과음(CC0)과 출처
 vendor/   PeerJS, QR코드 라이브러리, 개구·고운돋움 글꼴(SIL OFL)
 ```

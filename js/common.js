@@ -161,27 +161,37 @@ RQ.checkName = (raw) => {
   return { ok: true, name };
 };
 
-/* ---------- 캐릭터 ---------- */
-const INK = '#1C1B19';
+/* ---------- 캐릭터 ----------
+   그림은 characters/<id>.webp (256×256, 배경 투명 원형).
+   새 캐릭터를 넣으려면 그림 파일을 characters/ 폴더에 올리고 아래 목록에 한 줄 추가한다. */
 RQ.CHARS = [
-  { id: 'bear', name: '곰', svg: `<circle cx="28" cy="34" r="16" fill="#8E5A35"/><circle cx="92" cy="34" r="16" fill="#8E5A35"/><circle cx="28" cy="34" r="8" fill="#D9B48C"/><circle cx="92" cy="34" r="8" fill="#D9B48C"/><circle cx="60" cy="68" r="42" fill="#A86B3F"/><ellipse cx="60" cy="84" rx="20" ry="15" fill="#EAD2B0"/><circle cx="45" cy="62" r="5" fill="${INK}"/><circle cx="75" cy="62" r="5" fill="${INK}"/><ellipse cx="60" cy="77" rx="7" ry="5" fill="${INK}"/>` },
-  { id: 'chick', name: '병아리', svg: `<path d="M52 22 C54 12 60 10 62 18 C64 10 72 12 68 24" fill="none" stroke="#E3AC2E" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="68" r="44" fill="#F3C53A"/><circle cx="44" cy="60" r="5.5" fill="${INK}"/><circle cx="76" cy="60" r="5.5" fill="${INK}"/><path d="M51 72 L69 72 L60 84 Z" fill="#E07A2E"/><circle cx="34" cy="76" r="7" fill="#EE9A86"/><circle cx="86" cy="76" r="7" fill="#EE9A86"/>` },
-  { id: 'rabbit', name: '토끼', svg: `<ellipse cx="45" cy="30" rx="11" ry="27" fill="#FBF8F1" stroke="${INK}" stroke-width="3"/><ellipse cx="75" cy="30" rx="11" ry="27" fill="#FBF8F1" stroke="${INK}" stroke-width="3"/><ellipse cx="45" cy="32" rx="5" ry="17" fill="#EFA7A0"/><ellipse cx="75" cy="32" rx="5" ry="17" fill="#EFA7A0"/><circle cx="60" cy="76" r="36" fill="#FBF8F1" stroke="${INK}" stroke-width="3"/><circle cx="47" cy="72" r="4.5" fill="${INK}"/><circle cx="73" cy="72" r="4.5" fill="${INK}"/><ellipse cx="60" cy="84" rx="5" ry="3.5" fill="#E07A7A"/>` },
-  { id: 'cat', name: '고양이', svg: `<path d="M24 50 L30 14 L54 34 Z" fill="#E39A52"/><path d="M96 50 L90 14 L66 34 Z" fill="#E39A52"/><path d="M31 40 L33 24 L45 34 Z" fill="#F4C9A0"/><path d="M89 40 L87 24 L75 34 Z" fill="#F4C9A0"/><circle cx="60" cy="70" r="40" fill="#E9A15A"/><path d="M48 34 L52 46 M60 32 L60 46 M72 34 L68 46" stroke="#C47A3A" stroke-width="4" stroke-linecap="round"/><circle cx="46" cy="66" r="5" fill="${INK}"/><circle cx="74" cy="66" r="5" fill="${INK}"/><path d="M55 78 L65 78 L60 84 Z" fill="#D9636A"/><path d="M30 80 L14 76 M30 86 L14 88 M90 80 L106 76 M90 86 L106 88" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>` },
-  { id: 'dog', name: '강아지', svg: `<circle cx="60" cy="66" r="40" fill="#E6CFA6"/><ellipse cx="22" cy="62" rx="13" ry="28" fill="#8A5A3A" transform="rotate(14 22 62)"/><ellipse cx="98" cy="62" rx="13" ry="28" fill="#8A5A3A" transform="rotate(-14 98 62)"/><ellipse cx="74" cy="56" rx="12" ry="10" fill="#C9A273"/><circle cx="46" cy="58" r="5" fill="${INK}"/><circle cx="74" cy="58" r="5" fill="${INK}"/><ellipse cx="60" cy="76" rx="9" ry="6.5" fill="${INK}"/><path d="M60 82 L60 90 M52 92 Q60 98 68 92" stroke="${INK}" stroke-width="3" fill="none" stroke-linecap="round"/>` },
-  { id: 'penguin', name: '펭귄', svg: `<ellipse cx="60" cy="66" rx="42" ry="46" fill="#2F3A48"/><path d="M60 40 C 34 40, 30 64, 34 80 C 40 100, 80 100, 86 80 C 90 64, 86 40, 60 40 Z" fill="#FBF8F1"/><circle cx="48" cy="62" r="5" fill="${INK}"/><circle cx="72" cy="62" r="5" fill="${INK}"/><path d="M52 70 L68 70 L60 80 Z" fill="#E3AC2E"/><circle cx="40" cy="76" r="5" fill="#EE9A86"/><circle cx="80" cy="76" r="5" fill="#EE9A86"/>` },
-  { id: 'fox', name: '여우', svg: `<path d="M20 52 L28 12 L54 36 Z" fill="#D9692F"/><path d="M100 52 L92 12 L66 36 Z" fill="#D9692F"/><path d="M28 42 L31 24 L44 36 Z" fill="${INK}"/><path d="M92 42 L89 24 L76 36 Z" fill="${INK}"/><circle cx="60" cy="66" r="40" fill="#E07A35"/><path d="M22 70 C 34 74, 48 84, 60 100 C 72 84, 86 74, 98 70 C 92 96, 76 106, 60 106 C 44 106, 28 96, 22 70 Z" fill="#FBF8F1"/><circle cx="46" cy="62" r="5" fill="${INK}"/><circle cx="74" cy="62" r="5" fill="${INK}"/><ellipse cx="60" cy="86" rx="6" ry="4.5" fill="${INK}"/>` },
-  { id: 'frog', name: '개구리', svg: `<circle cx="36" cy="40" r="17" fill="#6FA85A"/><circle cx="84" cy="40" r="17" fill="#6FA85A"/><circle cx="36" cy="40" r="10" fill="#FBF8F1"/><circle cx="84" cy="40" r="10" fill="#FBF8F1"/><circle cx="37" cy="41" r="5" fill="${INK}"/><circle cx="83" cy="41" r="5" fill="${INK}"/><ellipse cx="60" cy="74" rx="46" ry="34" fill="#7DB866"/><path d="M38 78 Q60 96 82 78" stroke="${INK}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="32" cy="74" r="6" fill="#EE9A86"/><circle cx="88" cy="74" r="6" fill="#EE9A86"/>` },
-  { id: 'pig', name: '돼지', svg: `<path d="M26 44 L30 18 L50 34 Z" fill="#E78C99"/><path d="M94 44 L90 18 L70 34 Z" fill="#E78C99"/><circle cx="60" cy="66" r="42" fill="#F2A7B0"/><ellipse cx="60" cy="76" rx="16" ry="12" fill="#E78C99"/><ellipse cx="54" cy="76" rx="3.5" ry="5" fill="${INK}"/><ellipse cx="66" cy="76" rx="3.5" ry="5" fill="${INK}"/><circle cx="44" cy="56" r="5" fill="${INK}"/><circle cx="76" cy="56" r="5" fill="${INK}"/>` },
-  { id: 'panda', name: '판다', svg: `<circle cx="28" cy="34" r="15" fill="${INK}"/><circle cx="92" cy="34" r="15" fill="${INK}"/><circle cx="60" cy="68" r="42" fill="#FBF8F1" stroke="${INK}" stroke-width="3"/><ellipse cx="44" cy="64" rx="10" ry="13" fill="${INK}" transform="rotate(25 44 64)"/><ellipse cx="76" cy="64" rx="10" ry="13" fill="${INK}" transform="rotate(-25 76 64)"/><circle cx="45" cy="62" r="3.5" fill="#FBF8F1"/><circle cx="75" cy="62" r="3.5" fill="#FBF8F1"/><ellipse cx="60" cy="80" rx="6" ry="4.5" fill="${INK}"/><path d="M52 90 Q60 96 68 90" stroke="${INK}" stroke-width="3" fill="none" stroke-linecap="round"/>` },
-  { id: 'owl', name: '부엉이', svg: `<path d="M24 34 L34 14 L44 32 Z" fill="#6E4F35"/><path d="M96 34 L86 14 L76 32 Z" fill="#6E4F35"/><ellipse cx="60" cy="68" rx="42" ry="44" fill="#8C6A4A"/><ellipse cx="60" cy="88" rx="24" ry="20" fill="#D9C2A0"/><circle cx="42" cy="56" r="15" fill="#FBF8F1"/><circle cx="78" cy="56" r="15" fill="#FBF8F1"/><circle cx="42" cy="57" r="7" fill="${INK}"/><circle cx="78" cy="57" r="7" fill="${INK}"/><path d="M54 70 L66 70 L60 80 Z" fill="#E3AC2E"/>` },
-  { id: 'whale', name: '고래', svg: `<path d="M60 24 L60 12 M60 24 C 52 16, 46 14, 40 16 M60 24 C 68 16, 74 14, 80 16" stroke="#7DB8E0" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="70" rx="48" ry="40" fill="#4F7FB0"/><path d="M18 80 C 30 104, 90 104, 102 80 C 86 92, 34 92, 18 80 Z" fill="#DCE9F2"/><circle cx="42" cy="64" r="5" fill="${INK}"/><circle cx="78" cy="64" r="5" fill="${INK}"/><path d="M50 78 Q60 86 70 78" stroke="${INK}" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="34" cy="74" r="5" fill="#EE9A86"/><circle cx="86" cy="74" r="5" fill="#EE9A86"/>` },
+  { id: 'calico', name: '삼색이' },
+  { id: 'shiba', name: '시바' },
+  { id: 'rabbit', name: '토끼' },
+  { id: 'panda', name: '판다' },
+  { id: 'penguin', name: '펭귄' },
+  { id: 'coolcat', name: '멋쟁이' },
+  { id: 'unicorn', name: '유니콘' },
+  { id: 'dino', name: '공룡' },
+  { id: 'otter', name: '수달' },
+  { id: 'hedgehog', name: '고슴도치' },
+  { id: 'redpanda', name: '레서판다' },
+  { id: 'ghost', name: '유령' },
+  { id: 'robot', name: '로봇' },
+  { id: 'astronaut', name: '우주인' },
+  { id: 'wizard', name: '마법사' },
+  { id: 'fairy', name: '요정' },
+  { id: 'blossom', name: '벚꽃나무' },
+  { id: 'volcano', name: '화산' },
+  { id: 'whale', name: '고래' },
+  { id: 'polarbear', name: '북극곰' },
+  { id: 'sun', name: '해님' },
 ];
 RQ.charById = (id) => RQ.CHARS.find((c) => c.id === id) || RQ.CHARS[0];
 RQ.charSVG = (id, label = true) => {
   const c = RQ.charById(id);
-  const a = label ? `role="img" aria-label="${RQ.esc(c.name)} 캐릭터"` : 'aria-hidden="true"';
-  return `<svg viewBox="0 0 120 120" ${a} xmlns="http://www.w3.org/2000/svg">${c.svg}</svg>`;
+  const alt = label ? `${RQ.esc(c.name)} 캐릭터` : '';
+  return `<img src="characters/${c.id}.webp" alt="${alt}" width="256" height="256" draggable="false" decoding="async"${label ? '' : ' aria-hidden="true"'}>`;
 };
 
 /* ---------- 통신 ----------
