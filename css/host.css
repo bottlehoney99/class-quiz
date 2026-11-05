@@ -179,3 +179,4 @@ code { font-family: var(--body); background: var(--line); padding: 1px 5px; bord
   .podium { margin-left: 16px; margin-right: 16px; padding: 0; }
   .podium-head { padding: 24px 16px 0; }
 }
+.list-warn { margin: 0; padding: 10px 14px; border-left: 3px solid var(--red); background: var(--sheet); font-family: var(--body); font-size: 15px; color: var(--red); }

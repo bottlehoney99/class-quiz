@@ -37,10 +37,11 @@
       const ed = JSON.parse(localStorage.getItem('rq-editor-quiz') || 'null');
       if (ed && ed.questions && ed.questions.length) items.push({ label: ed.title, sub: '편집기에서 넘어온 퀴즈', load: async () => ed, editor: true });
     } catch (e) { /* 무시 */ }
+    let listWarn = '';
     try {
-      const res = await fetch('quizzes/index.json', { cache: 'no-store' });
-      const list = (await res.json()).quizzes || [];
-      list.forEach((it) => items.push({
+      const list = await repoQuizList();
+      listWarn = list.warn || '';
+      list.items.forEach((it) => items.push({
         label: it.title, sub: '저장소',
         load: async () => {
           const r = await fetch('quizzes/' + encodeURIComponent(RQ.nfc(it.file)), { cache: 'no-store' });
@@ -56,6 +57,8 @@
       (JSON.parse(localStorage.getItem(RECENT) || '[]')).forEach((q) => items.push({ label: q.title, sub: '최근 사용', load: async () => q }));
     } catch (e) { /* 무시 */ }
 
+    const warnEl = $('#list-warn');
+    if (warnEl) { warnEl.textContent = listWarn; warnEl.hidden = !listWarn; }
     const ul = $('#quiz-list');
     ul.innerHTML = items.length ? '' : '<li class="empty">아직 퀴즈가 없습니다. CSV를 불러오거나 편집기에서 만드세요.</li>';
     items.forEach((it) => {
@@ -76,6 +79,45 @@
       $('#folder-status').textContent = '이 브라우저는 폴더 저장을 지원하지 않습니다. 끝난 뒤 내려받기로 저장합니다.';
     }
     checkResume();
+  }
+
+  /* 저장소 퀴즈 목록
+     1) GitHub에서 quizzes/ 폴더의 CSV 파일을 모두 찾는다 (index.json을 고치지 않아도 뜬다)
+     2) quizzes/index.json이 있으면 거기 적힌 제목과 순서를 따른다
+     GitHub 목록을 못 가져오면 index.json만 쓴다. */
+  async function repoQuizList() {
+    let warn = '';
+    let indexed = [];
+    try {
+      const res = await fetch('quizzes/index.json', { cache: 'no-store' });
+      if (res.ok) {
+        const text = await res.text();
+        try { indexed = (JSON.parse(text).quizzes || []).filter((q) => q && q.file); }
+        catch (e) { warn = 'quizzes/index.json 파일의 형식이 잘못되어 제목을 읽지 못했습니다. 쉼표나 괄호가 빠졌는지 확인하세요.'; }
+      }
+    } catch (e) { /* index.json이 없어도 된다 */ }
+
+    let found = null;
+    const m = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i);
+    if (m) {
+      const repo = location.pathname.split('/').filter(Boolean)[0] || (m[1] + '.github.io');
+      try {
+        const r = await fetch(`https://api.github.com/repos/${m[1]}/${repo}/contents/quizzes`, { cache: 'no-store' });
+        if (r.ok) found = (await r.json()).filter((f) => f.type === 'file' && /\.csv$/i.test(f.name)).map((f) => RQ.nfc(f.name));
+      } catch (e) { /* GitHub에 못 닿으면 index.json만 쓴다 */ }
+    }
+
+    const byFile = new Map(indexed.map((q) => [RQ.nfc(q.file), RQ.nfc(q.title || q.file.replace(/\.csv$/i, ''))]));
+    let files;
+    if (found) {
+      const known = indexed.map((q) => RQ.nfc(q.file)).filter((f) => found.includes(f));
+      // 예시 퀴즈는 index.json에 적혀 있을 때만 보인다
+      const extra = found.filter((f) => !byFile.has(f) && f !== 'sample-photosynthesis.csv');
+      files = known.concat(extra.sort((a, b) => a.localeCompare(b, 'ko', { numeric: true })));
+    } else {
+      files = indexed.map((q) => RQ.nfc(q.file));
+    }
+    return { warn, items: files.map((f) => ({ file: f, title: byFile.get(f) || f.replace(/\.csv$/i, '') })) };
   }
 
   function pick(quiz, errors) {
